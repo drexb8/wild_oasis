@@ -49,16 +49,10 @@ const variations = {
 };
 
 const Button = styled.button`
-  font-size: 1.5rem;
-  padding: 0.5rem 1.5rem;
   border: none;
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-brand-600);
-  color: var(--color-grey-0);
-
-  &:hover {
-    background-color: var(--color-brand-700);
-  }
+  ${(props) => sizes[props.size]}
+  ${(props) => variations[props.variation]}
 `;
 
 export default Button;
