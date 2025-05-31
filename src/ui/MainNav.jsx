@@ -75,7 +75,7 @@ function MainNav() {
         </StyledLink>
         <StyledLink to="settings">
           <HiOutlineCog8Tooth />
-          <span>settings</span>
+          <span>Settings</span>
         </StyledLink>
       </NavList>
     </nav>
