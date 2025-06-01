@@ -11,8 +11,6 @@ const Row = styled.div`
   ${(props) =>
     props.type === "vertical" &&
     css`
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
     `}
 `;
