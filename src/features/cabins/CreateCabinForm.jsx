@@ -28,9 +28,11 @@ function CreateCabinForm() {
   });
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
+
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   }
+
   function onError(errors) {
     // console.log(errors);
   }
@@ -41,6 +43,7 @@ function CreateCabinForm() {
         <Input
           type="text"
           id="name"
+          disabled={isPending}
           {...register("name", { required: "Enter the cabin name." })}
         />
       </FormRow>
@@ -49,6 +52,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="maxCapacity"
+          disabled={isPending}
           {...register("maxCapacity", {
             required: "Enter the capacity",
             min: {
@@ -63,6 +67,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="regularPrice"
+          disabled={isPending}
           {...register("regularPrice", {
             required: "Enter the cabin price",
           })}
@@ -73,6 +78,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="discount"
+          disabled={isPending}
           defaultValue={0}
           {...register("discount", {
             validate: (value) =>
@@ -86,6 +92,7 @@ function CreateCabinForm() {
         <Textarea
           type="number"
           id="description"
+          disabled={isPending}
           defaultValue=""
           {...register("description", {
             required: "Enter the description of the cabin",
@@ -94,7 +101,14 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow label="Cabin photo" error={errors?.image?.message}>
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          disabled={isPending}
+          {...register("image", {
+            required: "Choose the cabin image",
+          })}
+        />
       </FormRow>
 
       <FormRow>
@@ -103,7 +117,7 @@ function CreateCabinForm() {
           Cancel
         </Button>
         <Button variation="primary" size="medium">
-          Add cabin
+          {isPending ? "Adding cabin..." : " Add cabin"}
         </Button>
       </FormRow>
     </Form>
