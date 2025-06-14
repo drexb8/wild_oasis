@@ -47,7 +47,7 @@ function CabinTable() {
         <div>Capacity</div>
         <div>Price</div>
         <div>Discount</div>
-        <div></div>
+        <div>Action</div>
       </TableHeader>
       {cabins?.map((cabin) => (
         <CabinRow cabin={cabin} key={cabin.id} />
