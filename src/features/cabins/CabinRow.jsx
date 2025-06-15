@@ -4,6 +4,13 @@ import Button from "../../ui/Button";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { formatCurrency } from "../../utils/helpers";
+import {
+  HiMiniSquare2Stack,
+  HiMiniPencilSquare,
+  HiMiniTrash,
+} from "react-icons/hi2";
+import { useCabins } from "./useCabins";
+import { useCreateCabin } from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,7 +53,7 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabin } = useDeleteCabin();
-
+  const { isCreating, createCabin } = useCreateCabin();
   const {
     id: cabinId,
     name,
@@ -56,6 +63,17 @@ function CabinRow({ cabin }) {
     description,
     image,
   } = cabin;
+
+  function handleDuplicate() {
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
   return (
     <>
       <TableRow role="row">
@@ -63,15 +81,27 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount > 0 ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
 
         <div>
+          <Button
+            disabled={isCreating}
+            size="small"
+            variation="secondary"
+            onClick={handleDuplicate}
+          >
+            <HiMiniSquare2Stack />
+          </Button>
           <Button
             size="small"
             variation="primary"
             onClick={() => setShowForm((showForm) => !showForm)}
           >
-            Edit cabin
+            <HiMiniPencilSquare />
           </Button>
           <Button
             size="small"
@@ -79,7 +109,7 @@ function CabinRow({ cabin }) {
             onClick={() => deleteCabin(cabinId)}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting..." : "Delete"}
+            <HiMiniTrash />
           </Button>
         </div>
       </TableRow>
