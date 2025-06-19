@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export function useUpdateCabin() {
   const queryClient = useQueryClient();
-  const { mutate: updateCabin, isWorking: isUpdating } = useMutation({
+  const { mutate: updateCabin, isPending: isUpdating } = useMutation({
     mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
     onSuccess: () => {
       queryClient.invalidateQueries({
